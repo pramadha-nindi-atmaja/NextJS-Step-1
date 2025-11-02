@@ -8,20 +8,35 @@ import styles from "./Layout.module.css";
 interface LayoutProps {
   children: ReactNode;
   pageTitle: string;
+  metaDescription?: string;
 }
-export default function index(props: LayoutProps) {
-  const { children, pageTitle } = props;
+
+export default function Layout({ 
+  children, 
+  pageTitle, 
+  metaDescription = "Nine Dragon Labs - Building innovative web solutions"
+}: LayoutProps) {
+  const fullTitle = `${pageTitle} | Nine Dragon Labs`;
+
   return (
-    <>
+    <div className={styles.wrapper}>
       <Head>
-        <title>NextJS Basic | {pageTitle}</title>
-        <meta name="description" content="Website NextJS Basic" />
+        <title>{fullTitle}</title>
+        <meta name="description" content={metaDescription} />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta charSet="utf-8" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className={styles.container}>
-        <Header />
-        <div className={styles.content}>{children}</div>
-        <Footer />
-      </div>
-    </>
+
+      <Header />
+      
+      <main className={styles.main}>
+        <div className={styles.container}>
+          {children}
+        </div>
+      </main>
+
+      <Footer />
+    </div>
   );
 }
